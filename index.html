@@ -18,8 +18,9 @@
   --text:#1d1d1f; --muted:#6f6f6f;
   --line:rgba(0,0,0,.10);
   --accent:#0071e3; --accent-soft:rgba(0,113,227,.10);
+  --ok:#34c759; --err:#ff3b30;
   --radius:24px; --radius-s:16px; --shadow:0 12px 34px rgba(0,0,0,.10);
-  --nav-h:64px; --ok:#34c759; --err:#ff3b30;
+  --nav-h:64px;
   --pad:clamp(20px,4vw,48px);
   --wrap:1320px;
   --dock-h:64px;
@@ -84,11 +85,8 @@ a{color:var(--accent)}
   -webkit-backdrop-filter:saturate(140%) blur(18px);border-bottom:1px solid rgba(255,255,255,.08)}
 .nav-in{max-width:var(--wrap);margin:0 auto;padding:0 var(--pad);height:var(--nav-h);display:flex;align-items:center;gap:14px}
 .logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:16px;text-decoration:none;color:#fff;min-height:44px}
-.logo-m{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#0b3ea8,#3f97f0);
-  color:#fff;display:grid;place-items:center;font-size:11px;font-weight:800;flex:none;position:relative;overflow:hidden}
-.logo-m img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:6px}
-.logo-m img.hide{display:none}
-.logo-fb{font-size:11px;font-weight:800;letter-spacing:.02em}
+.logo-img{height:32px;width:auto;flex:none}
+.logo-img.hide{display:none}
 .nav-links{display:none;gap:6px;margin-left:auto}
 .nav-links a{color:rgba(255,255,255,.72);text-decoration:none;font-size:15px;font-weight:500;padding:10px 14px;border-radius:980px;min-height:44px;display:inline-flex;align-items:center;border-bottom:2px solid transparent}
 .nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
@@ -107,21 +105,21 @@ a{color:var(--accent)}
 .menu a{color:rgba(255,255,255,.85);text-decoration:none;font-size:18px;font-weight:600;padding:12px 14px;border-radius:14px;min-height:48px;display:flex;align-items:center}
 .menu a:hover{background:rgba(255,255,255,.08);color:#fff}
 
-/* ============ HERO ============ */
+/* ============ HERO: текст вверху слева, крупное изображение заходит под него ============ */
 .hero{position:relative;overflow:hidden;background:var(--charcoal);color:#fff;
   min-height:calc((100vh - var(--nav-h))/var(--zoom));
   min-height:calc((100svh - var(--nav-h))/var(--zoom));
-  display:flex;flex-direction:column;justify-content:center;padding:clamp(14px,2vw,36px) 0 0}
+  display:flex;flex-direction:column;justify-content:flex-start;
+  padding:clamp(28px,4.5vw,72px) 0 clamp(120px,18vw,300px)}
 .hero::before{content:"";position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(120% 90% at 78% 20%,rgba(255,255,255,.06),transparent 60%)}
 .hero .wrap{position:relative;z-index:1;width:100%}
-.hero-grid{display:grid;gap:clamp(24px,3vw,40px);align-items:end}
-@media (min-width:900px){.hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr)}}
-.hero-left{padding-bottom:clamp(40px,5vw,76px)}
+.hero-media{position:absolute;right:0;bottom:0;width:clamp(300px,62%,1040px);z-index:0;pointer-events:none}
+.hero-left{position:relative;z-index:1;max-width:680px}
 .hero-name{border-left:2px solid var(--hero-acc);padding-left:clamp(16px,2vw,26px)}
 .hero-name h1{font-size:clamp(34px,6.4vw,92px);font-weight:600;color:#fff;letter-spacing:-.03em}
 .hero-sub{margin-top:10px;font-size:clamp(15px,1.6vw,20px);color:rgba(255,255,255,.66);letter-spacing:.02em}
-.hero-slogan{margin-top:22px;font-size:clamp(17px,2vw,26px);color:rgba(255,255,255,.92);max-width:640px;font-weight:600;letter-spacing:-.01em}
+.hero-slogan{margin-top:22px;font-size:clamp(17px,2vw,26px);color:rgba(255,255,255,.92);max-width:640px;font-weight:600;letter-spacing:-.01em;line-height:1.35}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
 .btn.line{background:transparent;color:var(--hero-acc);border:1.5px solid var(--hero-acc)}
 .btn.line:hover{background:rgba(77,163,255,.14);opacity:1}
@@ -134,10 +132,9 @@ a{color:var(--accent)}
   display:grid;place-items:center;transition:transform .2s,background .2s}
 .hero-scroll:hover .dn{transform:translateY(3px);background:rgba(77,163,255,.16)}
 .hero-scroll:hover{color:#fff}
-.hero-stage{position:relative;width:100%;max-width:min(480px,calc(94svh/var(--zoom)));margin-inline:auto}
-@media (min-width:900px){.hero-stage{max-width:min(100%,calc(94svh/var(--zoom)));margin-inline:0 0 0 auto}}
-.hero-photo{margin:0;position:relative;aspect-ratio:1/1;overflow:hidden}
-.hero-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 62%;
+/* изображение 1536×1024 (3:2), прижато к правому нижнему углу hero */
+.hero-photo{margin:0;position:relative;aspect-ratio:3/2;overflow:hidden}
+.hero-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:100% 100%;
   opacity:0;transition:opacity .8s}
 .hero-photo.is-loaded img{opacity:1}
 .hero-photo.is-missing img{display:none}
@@ -147,16 +144,6 @@ a{color:var(--accent)}
 .is-missing .photo-ph{display:flex}
 .photo-ph svg{opacity:.6}
 .ph-file{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;opacity:.85;word-break:break-all}
-
-/* ============ ПАНОРАМА-ЛЕНТА ПОД HERO ============ */
-.pano-band{background:var(--charcoal);padding:0 0 clamp(8px,1.5vw,20px)}
-.pano-photo{margin:0;position:relative;height:clamp(80px,12vw,200px);overflow:hidden}
-.pano-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%;
-  opacity:0;transition:opacity .8s}
-.pano-photo.is-loaded img{opacity:1}
-.pano-photo.is-missing img{display:none}
-.pano-photo .photo-ph{border-radius:0;border-left:0;border-right:0;
-  background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.6)}
 
 /* ============ DOCK ============ */
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:45;
@@ -185,32 +172,36 @@ a{color:var(--accent)}
 .tcard:hover{transform:translateY(-3px)}
 .t-head{display:flex;align-items:center;gap:14px;width:100%}
 .tcard .ai{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;flex:none;
-  background:color-mix(in srgb,var(--aic,var(--accent)) 15%,transparent);color:var(--aic,var(--accent))}
+  background:color-mix(in srgb,var(--acc-p,var(--accent)) 15%,transparent);color:var(--acc-p,var(--accent))}
 .tcard .ai svg{width:24px;height:24px}
 .tcard p{color:var(--muted);font-size:15.5px}
 .chip-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:28px}
 
-/* ============ СФЕРЫ ============ */
-.cards{display:grid;gap:18px;grid-template-columns:1fr}
-@media (min-width:700px){.cards{grid-template-columns:repeat(2,1fr)}}
-@media (min-width:1060px){.cards{grid-template-columns:repeat(3,1fr)}}
-.pcard{padding:clamp(20px,2.2vw,26px);display:flex;flex-direction:column;gap:14px;position:relative;
+/* ============ СФЕРЫ: прямоугольники по одному в строку ============ */
+.cards{display:grid;gap:14px;grid-template-columns:1fr}
+.sph-row{padding:clamp(18px,2.2vw,26px);display:flex;flex-wrap:wrap;gap:22px;align-items:center;
   transition:transform .25s,box-shadow .25s,border-color .25s}
-.pcard:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--acc-p) 55%,transparent)}
-.pcard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.pcard-ico{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;
+.sph-row:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--acc-p) 55%,transparent)}
+.sph-ico{width:112px;height:112px;border-radius:50%;display:grid;place-items:center;flex:none;
   background:color-mix(in srgb,var(--acc-p) 14%,transparent);color:var(--acc-p)}
-.pcard-ico svg{width:28px;height:28px}
+.sph-ico svg{width:52px;height:52px}
+.sph-body{flex:1 1 320px;min-width:0;display:grid;gap:8px;align-content:start}
+.sph-body h3{font-size:20px}
+.sph-owners{color:var(--muted);font-size:14px;font-weight:600}
+.sph-list{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.sph-list li{position:relative;padding-left:18px;color:var(--muted);font-size:14.5px;line-height:1.45}
+.sph-list li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;
+  background:var(--acc-p);opacity:.75}
+.sph-side{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;
+  flex:1 1 100%;margin-left:0}
+@media (min-width:900px){
+  .sph-side{flex:0 0 auto;flex-direction:column;align-items:flex-end;justify-content:space-between;align-self:stretch;margin-left:auto;gap:12px}
+}
 .p-badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:7px 12px;border-radius:980px;
   background:var(--surface-2);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
 .p-badge.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 45%,transparent)}
-.pcard h3{font-size:20px}
-.pcard .owners{color:var(--muted);font-size:14px;font-weight:600}
-.sph-list{margin:0;padding:0;list-style:none;display:grid;gap:8px;flex:1}
-.sph-list li{position:relative;padding-left:18px;color:var(--muted);font-size:14.5px;line-height:1.45}
-.sph-list li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;
-  background:var(--acc-p);opacity:.65}
-.pcard-cta{align-self:flex-start;min-height:48px}
+.p-badge svg{width:14px;height:14px}
+.sph-side .btn{min-height:44px;padding:10px 22px;font-size:15px}
 
 /* ============ СЕРВИСЫ ============ */
 .sv-grid{display:grid;gap:16px;grid-template-columns:1fr}
@@ -254,9 +245,8 @@ a{color:var(--accent)}
   padding:clamp(40px,5vw,64px) 0 calc(clamp(40px,5vw,64px) + var(--dock-h) + 12px);
   background:var(--charcoal);color:#fff}
 .footer-in{display:grid;justify-items:center;gap:22px;text-align:center}
-.f-logo{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
-  display:grid;place-items:center;overflow:hidden}
-.f-logo img{width:100%;height:100%;object-fit:contain;padding:8px}
+.f-logo{display:grid;place-items:center}
+.f-logo img{height:76px;width:auto}
 .f-logo img.hide{display:none}
 .f-title{font-size:clamp(20px,2.4vw,28px);font-weight:700;letter-spacing:-.02em;color:#fff}
 .f-contacts{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;width:100%}
@@ -294,13 +284,11 @@ a{color:var(--accent)}
 /* ============================================================================
    ШПАРГАЛКА ПО ФАЙЛАМ — что загрузить в папку images/
    ----------------------------------------------------------------------------
-   logo-white.png              логотип БЕЛЫЙ          → тёмная шапка (nav)
-   logo-color.png              логотип ЦВЕТНОЙ        → футер
-   logo-black.png              логотип ЧЁРНЫЙ         → печатные версии/документы (на сайте не используется)
-   hero-school-iso-white.png   ИЗОМЕТРИЯ комплекса белыми линиями (прозрачный фон) → hero справа
-   school-panorama-white.png   ПАНОРАМА белыми линиями → лента-«скайлайн» под hero (.pano-band)
-   school-panorama-black.png   панорама чёрными линиями → резерв (пока не подключена)
-   prod-01.png … prod-06.png   скриншоты продуктов ТПГ → блок «Продукты ТПГ»
+   logo-white.png    логотип БЕЛЫЙ (без фона и рамки) → шапка (nav) и футер (крупно)
+   logo-color.png    логотип ЦВЕТНОЙ → резерв (печатные материалы, презентации)
+   logo-black.png    логотип ЧЁРНЫЙ  → резерв (документы)
+   hero-school-white.png  графика школы белыми линиями, 1536×1024 (3:2) → hero: справа снизу, заходит под текст
+   prod-01.png … prod-06.png  скриншоты продуктов ТПГ → блок «Продукты ТПГ»
    ----------------------------------------------------------------------------
    Пока файла нет — сайт покажет аккуратную заглушку с именем файла и НЕ сломается.
 ============================================================================ */
@@ -309,10 +297,9 @@ a{color:var(--accent)}
 const ME = "mmmaslikov";
 const IMG = "images/";
 const LS_THEME = "tai_site_theme_v1";
-const HERO_IMG = ["hero-school-white.png", "Вид сбоку комплекса «Точка будущего», белые линии"];
-const PANO_IMG = ["school-panorama-white.png", "Панорама комплекса «Точка будущего», белые линии"];
-const LOGO_NAV = "logo-white.png";
-const LOGO_FOOT = "logo-color.png";
+const SCHOOL_SITE = "https://иркутск.точкабудущего.рф/";
+const HERO_IMG = ["hero-school-white.png", "Графика школы «Точка будущего» белыми линиями"];
+const LOGO = "logo-white.png";
 
 const SPHERES = [
   { id:"math", title:"МО математики, информатики, физики и труда", owners:"Масликов Михаил", color:"#0a84ff", icon:"dev", url:"",
@@ -355,16 +342,16 @@ const SPHERES = [
     items:["Анализ диагностики и планирование коррекционной работы.",
            "Адаптация материалов под индивидуальные образовательные потребности.",
            "Создание визуальной поддержки и наглядных материалов."] },
-  { id:"admin", title:"Административно-управленческий персонал", owners:"Никулин Егор", color:"#ac8e5f", icon:"briefcase", url:"",
+  { id:"admin", title:"Административно-управленческий персонал", owners:"Никулин Егор", color:"#30b0c7", icon:"briefcase", url:"",
     items:["Автоматизация документооборота: приказы, распоряжения, протоколы.",
            "Конспекты совещаний и планёрок с выделением решений и сроков.",
            "Аналитика образовательных показателей с ИИ-визуализацией и выводами."] }
 ];
 
 const SAFETY = [
-  { icon:"shield", color:"#ff453a", title:"Персональные данные — не в открытые сети",
+  { icon:"shield", color:"#ff453a", title:"Персональные данные — в закрытом доступе",
     text:"ФИО, оценки, фото, диагнозы и любые документы учеников не загружаются в публичные нейросети и внешние сервисы." },
-  { icon:"eye", color:"#ff9f0a", title:"Анонимизируйте материалы",
+  { icon:"eye", color:"#ff9f0a", title:"Анонимизация материалов",
     text:"Перед работой с ИИ замените имена на «Ученик А», уберите реквизиты документов и любые детали, по которым можно узнать ребёнка." },
   { icon:"check", color:"#30d158", title:"Только проверенные сервисы",
     text:"Используем сервисы из раздела «Сервисы школы» — они одобрены для работы в комплексе. Новые инструменты сначала обсуждаем в ТПГ." },
@@ -436,7 +423,6 @@ const ICONS = {
   team:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.4"/><path d="M2.6 20a6.4 6.4 0 0 1 12.8 0"/><circle cx="17.4" cy="9.4" r="2.8"/><path d="M15.6 14.6a5.4 5.4 0 0 1 6 5.4"/></svg>',
   ext:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5"/></svg>',
   mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
-  send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13M22 2 15 22l-4-9-9-4z"/></svg>',
   copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
   down:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>',
   sun:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M19.4 4.6l-1.7 1.7M6.3 17.7l-1.7 1.7"/></svg>',
@@ -456,7 +442,7 @@ function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("sh
 function bindImages(root){
   $$("img[data-file]", root).forEach(img=>{
     const f = img.dataset.file;
-    const frame = img.closest(".hero-photo, .gal-photo, .pano-photo");
+    const frame = img.closest(".hero-photo, .gal-photo");
     if (missingFiles.has(f)){ frame?.classList.add("is-missing"); return; }
     img.addEventListener("error", ()=>{ missingFiles.add(f); frame?.classList.add("is-missing"); });
     img.addEventListener("load", ()=>frame?.classList.add("is-loaded"));
@@ -474,8 +460,8 @@ function bindImages(root){
 function renderApp(){
   $("#app").innerHTML = `
   <header class="nav"><div class="nav-in">
-    <a class="logo" href="#top" aria-label="На главную">
-      <span class="logo-m"><img data-logo="${LOGO_NAV}" src="${IMG}${LOGO_NAV}" alt=""><span class="logo-fb" aria-hidden="true">ТИ</span></span>
+    <a class="logo" href="#top" aria-label="Точка ИИ — на главную">
+      <img class="logo-img" data-logo="${LOGO}" src="${IMG}${LOGO}" alt="">
       <span>Точка ИИ</span></a>
     <nav class="nav-links" aria-label="Разделы сайта">
       <a href="#about" data-spy="about">О сайте</a><a href="#spheres" data-spy="spheres">Сферы</a>
@@ -492,44 +478,37 @@ function renderApp(){
     <a href="#services">Сервисы</a><a href="#products">Продукты</a><a href="#contacts">Контакты</a>
   </nav>
   <main id="top">
-    <section class="hero"><div class="wrap">
-      <div class="hero-grid">
+    <section class="hero">
+      <div class="wrap">
         <div class="hero-left">
           <div class="hero-name rv">
             <h1>Точка ИИ</h1>
             <p class="hero-sub">работаем с интеллектом</p>
           </div>
-          <p class="hero-slogan rv">рабочее пространство сотрудников ЧОУ «Точка будущего» · от ТПГ «ГенИИ»</p>
+          <p class="hero-slogan rv">интерактивное пространство<br>сотрудников ЧОУ «Точка будущего»<br>от ТПГ «ГенИИ»</p>
           <div class="hero-cta rv">
-            <a class="btn line" href="#spheres">Сферы комплекса</a>
-            <a class="btn dim" href="#services">Сервисы школы</a>
+            <a class="btn line" href="${SCHOOL_SITE}" target="_blank" rel="noopener">Сайт комплекса</a>
+            <a class="btn dim" href="#services">Сервисы</a>
           </div>
           <a class="hero-scroll rv" href="#spheres"><i></i>смотреть сферы<span class="dn">${ICONS.down}</span></a>
         </div>
-        <div class="hero-stage rv">
-          <figure class="hero-photo" data-photo>
-            <img data-file="${HERO_IMG[0]}" src="${IMG}${HERO_IMG[0]}" alt="${esc(HERO_IMG[1])}" decoding="async">
-            <div class="photo-ph" aria-hidden="true">${ICONS.cam}<span>Сюда встанет изометрия школы белыми линиями</span><span class="ph-file">${IMG}${HERO_IMG[0]}</span></div>
-          </figure>
-        </div>
       </div>
-    </div></section>
-
-    <div class="pano-band">
-      <figure class="pano-photo">
-        <img data-file="${PANO_IMG[0]}" src="${IMG}${PANO_IMG[0]}" alt="${esc(PANO_IMG[1])}" decoding="async">
-        <div class="photo-ph" aria-hidden="true">${ICONS.cam}<span>Сюда встанет панорама школы белыми линиями</span><span class="ph-file">${IMG}${PANO_IMG[0]}</span></div>
-      </figure>
-    </div>
+      <div class="hero-media">
+        <figure class="hero-photo" data-photo>
+          <img data-file="${HERO_IMG[0]}" src="${IMG}${HERO_IMG[0]}" alt="${esc(HERO_IMG[1])}" decoding="async">
+          <div class="photo-ph" aria-hidden="true">${ICONS.cam}<span>Сюда встанет графика школы белыми линиями</span><span class="ph-file">${IMG}${HERO_IMG[0]}</span></div>
+        </figure>
+      </div>
+    </section>
 
     <section class="sec" id="about"><div class="wrap">
       <div class="sec-head center rv"><span class="sec-kicker">О сайте</span><h2>Одна точка входа во всё, что связано с ИИ в школе</h2>
       <p class="sec-lead">Здесь собраны проверенные сервисы, готовые промпты, инструкции и страницы методических объединений и служб — чтобы ИИ экономил время, а не съедал его на поиски и догадки.</p></div>
       <div class="two-col rv">
-        <article class="tcard" style="--aic:#0a84ff"><div class="t-head"><span class="ai">${ICONS.layers}</span><h3>Зачем этот сайт</h3></div><p class="j">Убрать разрыв между интересом к нейросетям и их реальной пользой: вместо стихийных экспериментов — единое место с проверенными инструментами, алгоритмами и примерами применения в каждой сфере комплекса.</p></article>
-        <article class="tcard" style="--aic:#30d158"><div class="t-head"><span class="ai">${ICONS.team}</span><h3>Для кого</h3></div><p class="j">Для всех сотрудников: учителей-предметников, психологов и тьюторов, педагогов-организаторов, сотрудников Буклаба, специалистов инклюзивного сопровождения и руководителей. У каждой сферы — своя страница со своими кейсами.</p></article>
-        <article class="tcard" style="--aic:#ff9f0a"><div class="t-head"><span class="ai">${ICONS.check}</span><h3>Из практики — в практику</h3></div><p class="j">В основе контента — реальная работа: кейсы, промпты и инструкции проверяются сотрудниками на уроках, совещаниях и мероприятиях, а затем публикуются, чтобы коллеги могли переиспользовать готовые решения.</p></article>
-        <article class="tcard" style="--aic:#bf5af2"><div class="t-head"><span class="ai">${ICONS.spark}</span><h3>Кто поддерживает</h3></div><p class="j">Сайт создаёт и развивает ТПГ «ГенИИ» — творческая проектировочная группа под руководством Масликова Михаила Михайловича. Страницы сфер наполняют участники: сайт развивается вместе с командой.</p></article>
+        <article class="tcard" style="--acc-p:#0a84ff"><div class="t-head"><span class="ai">${ICONS.layers}</span><h3>Зачем этот сайт</h3></div><p class="j">Убрать разрыв между интересом к нейросетям и их реальной пользой: вместо стихийных экспериментов — единое место с проверенными инструментами, алгоритмами и примерами применения в каждой сфере комплекса.</p></article>
+        <article class="tcard" style="--acc-p:#30d158"><div class="t-head"><span class="ai">${ICONS.team}</span><h3>Для кого</h3></div><p class="j">Для всех сотрудников: учителей-предметников, психологов и тьюторов, педагогов-организаторов, сотрудников Буклаба, специалистов инклюзивного сопровождения и руководителей. У каждой сферы — своя страница со своими кейсами.</p></article>
+        <article class="tcard" style="--acc-p:#ff9f0a"><div class="t-head"><span class="ai">${ICONS.check}</span><h3>Проверенные кейсы</h3></div><p class="j">В основе контента — реальная работа: кейсы, промпты и инструкции проверяются сотрудниками на уроках, совещаниях и мероприятиях, а затем публикуются, чтобы коллеги могли переиспользовать готовые решения.</p></article>
+        <article class="tcard" style="--acc-p:#bf5af2"><div class="t-head"><span class="ai">${ICONS.spark}</span><h3>Кто поддерживает</h3></div><p class="j">Сайт создаёт и развивает ТПГ «ГенИИ» — творческая проектировочная группа под руководством Масликова Михаила Михайловича. Страницы сфер наполняют участники: сайт развивается вместе с командой.</p></article>
       </div>
       <div class="chip-row rv">
         <span class="chip">11 сфер комплекса</span><span class="chip">8 проверенных сервисов</span>
@@ -564,20 +543,20 @@ function renderApp(){
   </main>
 
   <footer class="footer" id="contacts"><div class="wrap footer-in">
-    <span class="f-logo"><img data-logo="${LOGO_FOOT}" src="${IMG}${LOGO_FOOT}" alt="Логотип Точка ИИ"></span>
+    <span class="f-logo"><img data-logo="${LOGO}" src="${IMG}${LOGO}" alt="Логотип Точка ИИ"></span>
     <div class="f-title">Предложить материал или задать вопрос</div>
     <div class="f-contacts">
       <div class="crow">
         <a class="crow-a" href="mailto:${ME}@gmail.com">
           <span class="ci">${ICONS.mail}</span>
-          <span class="ct"><small>Email куратора</small><b>${ME}@gmail.com</b></span>
+          <span class="ct"><small>Email для связи</small><b>${ME}@gmail.com</b></span>
         </a>
         <button class="copy-mini" id="copy-mail" type="button" aria-label="Скопировать email">${ICONS.copy}</button>
       </div>
       <div class="crow">
         <a class="crow-a" href="https://mmmaslikov.github.io/" target="_blank" rel="noopener">
           <span class="ci">${ICONS.dev}</span>
-          <span class="ct"><small>Сайт учителя</small><b>mmmaslikov.github.io</b></span>
+          <span class="ct"><small>Сайт куратора</small><b>mmmaslikov.github.io</b></span>
           <span class="cext">${ICONS.ext}</span>
         </a>
       </div>
@@ -615,21 +594,23 @@ function renderCards(){
       ? `<span class="p-badge ok">${ICONS.check} страница готова</span>`
       : `<span class="p-badge">${ICONS.lock} в разработке</span>`;
     const cta = ready
-      ? `<a class="btn secondary pcard-cta" href="${esc(s.url)}" target="_blank" rel="noopener">Перейти на страницу ${ICONS.ext}</a>`
-      : `<button class="btn ghost pcard-cta" type="button" data-soon="${esc(s.title)}">Страница скоро появится</button>`;
+      ? `<a class="btn secondary" href="${esc(s.url)}" target="_blank" rel="noopener">Перейти на страницу</a>`
+      : `<button class="btn ghost" type="button" data-soon="${esc(s.title)}">Страница скоро появится</button>`;
     return `
-    <article class="card pcard rv" style="--acc-p:${s.color}">
-      <div class="pcard-top"><span class="pcard-ico">${ICONS[s.icon]}</span>${badge}</div>
-      <h3>${esc(s.title)}</h3>
-      <div class="owners">${esc(s.owners)}</div>
-      <ul class="sph-list">${s.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
-      ${cta}
+    <article class="card sph-row rv" style="--acc-p:${s.color}">
+      <span class="sph-ico">${ICONS[s.icon]}</span>
+      <div class="sph-body">
+        <h3>${esc(s.title)}</h3>
+        <div class="sph-owners">${esc(s.owners)}</div>
+        <ul class="sph-list">${s.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
+      </div>
+      <div class="sph-side">${badge}${cta}</div>
     </article>`;
   }).join("");
 }
 function renderSafety(){
   $("#safety-grid").innerHTML = SAFETY.map(s=>`
-    <article class="tcard" style="--aic:${s.color}">
+    <article class="tcard" style="--acc-p:${s.color}">
       <div class="t-head"><span class="ai">${ICONS[s.icon]}</span><h3>${esc(s.title)}</h3></div>
       <p>${esc(s.text)}</p>
     </article>`).join("");
