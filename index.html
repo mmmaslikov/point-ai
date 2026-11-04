@@ -522,7 +522,7 @@ function renderApp(){
     </div></section>
 
     <section class="sec" id="about"><div class="wrap">
-      <div class="sec-head center rv"><span class="sec-kicker">О сайте</span><h2>Одна точка входа во всё, что связано с ИИ в школе</h2>
+      <div class="sec-head center rv"><span class="sec-kicker">О сайте</span><h2>Одна точка входа во всё, что связано с ИИ в комплексе</h2>
       <p class="sec-lead">Здесь собраны проверенные сервисы, готовые промпты, инструкции и страницы методических объединений и служб — чтобы ИИ экономил время, а не съедал его на поиски и догадки.</p></div>
       <div class="two-col rv">
         <article class="tcard" style="--acc-p:#0a84ff"><div class="t-head"><span class="ai">${ICONS.layers}</span><h3>Зачем этот сайт</h3></div><p class="j">Убрать разрыв между интересом к нейросетям и их реальной пользой: вместо стихийных экспериментов — единое место с проверенными инструментами, алгоритмами и примерами применения в каждой сфере комплекса.</p></article>
@@ -632,14 +632,14 @@ function renderSafety(){
   $("#safety-grid").innerHTML = SAFETY.map(s=>`
     <article class="tcard" style="--acc-p:${s.color}">
       <div class="t-head"><span class="ai">${ICONS[s.icon]}</span><h3>${esc(s.title)}</h3></div>
-      <p>${esc(s.text)}</p>
+      <p class="j">${esc(s.text)}</p>
     </article>`).join("");
 }
 function renderServices(){
   $("#sv-grid").innerHTML = SERVICES.map(s=>`
     <a class="scard" style="--acc-p:${s.color}" href="${esc(s.url)}" target="_blank" rel="noopener">
       <span class="s-head"><span class="si">${ICONS[s.icon]}</span><h3>${esc(s.name)}</h3></span>
-      <p>${esc(s.desc)}</p>
+      <p class="j">${esc(s.desc)}</p>
       <span class="s-foot"><span class="go">Открыть сервис ${ICONS.ext}</span></span>
     </a>`).join("");
 }
