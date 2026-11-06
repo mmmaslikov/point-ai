@@ -105,7 +105,7 @@ a{color:var(--accent)}
 .menu a{color:rgba(255,255,255,.85);text-decoration:none;font-size:18px;font-weight:600;padding:12px 14px;border-radius:14px;min-height:48px;display:flex;align-items:center}
 .menu a:hover{background:rgba(255,255,255,.08);color:#fff}
 
-/* ============ HERO: текст слева по центру, изображение справа по центру без наложения ============ */
+/* ============ HERO ============ */
 .hero{position:relative;overflow:hidden;background:var(--charcoal);color:#fff;
   min-height:calc((100vh - var(--nav-h))/var(--zoom));
   min-height:calc((100svh - var(--nav-h))/var(--zoom));
@@ -133,7 +133,6 @@ a{color:var(--accent)}
   display:grid;place-items:center;transition:transform .2s,background .2s}
 .hero-scroll:hover .dn{transform:translateY(3px);background:rgba(77,163,255,.16)}
 .hero-scroll:hover{color:#fff}
-/* изображение 1536×1024 (3:2): справа по центру, правый край по краю контента; на мобильных — по центру под текстом */
 .hero-stage{position:relative;width:100%;max-width:min(520px,100%);margin-inline:auto}
 @media (min-width:900px){.hero-stage{max-width:100%;margin-inline:0 0 0 auto}}
 .hero-photo{margin:0;position:relative;aspect-ratio:3/2;overflow:hidden}
@@ -200,7 +199,6 @@ a{color:var(--accent)}
 @media (min-width:900px){
   .sph-side{flex:0 0 auto;flex-direction:column;align-items:flex-end;justify-content:space-between;align-self:stretch;margin-left:auto;gap:12px}
 }
-/* мобильная версия: значок + название/ФИ сверху (как в «Безопасности»), без пилюли */
 @media (max-width:759px){
   .sph-row{display:grid;grid-template-columns:auto 1fr;
     grid-template-areas:"ico title" "ico owners" "list list" "cta cta";
@@ -221,10 +219,28 @@ a{color:var(--accent)}
 .p-badge svg{width:14px;height:14px}
 .sph-side .btn{min-height:44px;padding:10px 22px;font-size:15px}
 
-/* ============ СЕРВИСЫ: название справа от значка, низ — пилюля слева / ссылка справа ============ */
+/* ============ КАТАЛОГ СЕРВИСОВ ============ */
+.sv-tools{display:grid;gap:14px;margin-bottom:24px}
+.sv-search{position:relative}
+.sv-search svg{position:absolute;left:18px;top:50%;translate:0 -50%;width:18px;height:18px;color:var(--muted);pointer-events:none}
+.sv-search input{width:100%;font:inherit;font-size:16px;color:var(--text);background:var(--surface);
+  border:1px solid var(--line);border-radius:980px;padding:13px 22px 13px 48px;min-height:52px;box-shadow:var(--shadow)}
+.sv-search input::placeholder{color:var(--muted)}
+.sv-search input:focus{outline:3px solid var(--accent);outline-offset:2px}
+.sv-cats{display:flex;flex-wrap:wrap;gap:8px}
+.cat-chip{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 16px;border-radius:980px;border:1px solid var(--line);
+  background:var(--surface);color:var(--text);font:inherit;font-size:14px;font-weight:600;cursor:pointer;
+  transition:all .18s;min-height:42px;flex:1 1 auto}
+.cat-chip:hover{border-color:var(--accent);color:var(--accent)}
+.cat-chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.cat-chip .cn{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;
+  background:color-mix(in srgb,var(--text) 8%,transparent);color:var(--muted)}
+.cat-chip.on .cn{background:rgba(255,255,255,.22);color:#fff}
+.cat-chip.zero:not(.on){opacity:.6}
+.sv-count{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .sv-grid{display:grid;gap:16px;grid-template-columns:1fr}
 @media (min-width:640px){.sv-grid{grid-template-columns:repeat(2,1fr)}}
-@media (min-width:1060px){.sv-grid{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:1000px){.sv-grid{grid-template-columns:repeat(3,1fr)}}
 .scard{padding:22px;border-radius:20px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);
   display:flex;flex-direction:column;gap:12px;transition:transform .25s,border-color .25s;text-decoration:none;color:inherit}
 .scard:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--acc-p) 55%,transparent)}
@@ -233,11 +249,30 @@ a{color:var(--accent)}
   background:color-mix(in srgb,var(--acc-p) 14%,transparent);color:var(--acc-p)}
 .s-head .si svg{width:24px;height:24px}
 .s-head h3{font-size:18px}
+.s-head .s-ext{margin-left:auto;color:var(--muted);display:grid;place-items:center;flex:none;transition:color .2s,transform .2s}
+.s-head .s-ext svg{width:16px;height:16px}
+.scard:hover .s-ext{color:var(--acc-p);transform:translate(2px,-2px)}
 .scard p{color:var(--muted);font-size:14.5px;flex:1}
-.s-foot{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:auto}
-.s-foot .go{display:inline-flex;align-items:center;gap:7px;color:var(--acc-p);font-weight:600;font-size:14.5px}
-.s-foot .go svg{width:15px;height:15px;transition:transform .2s}
-.scard:hover .go svg{transform:translateX(3px)}
+.s-tags{display:flex;flex-wrap:wrap;gap:6px}
+.s-tags .tag{font-size:12px;padding:4px 10px;border-radius:999px;background:var(--surface-2);
+  border:1px solid var(--line);color:var(--muted);font-weight:600}
+.s-author{font-size:12.5px;color:var(--muted);font-style:italic}
+.s-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:auto}
+.s-cat{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);font-weight:600}
+.sv-empty{grid-column:1/-1;padding:clamp(28px,4vw,44px);border-radius:var(--radius);
+  border:1.5px dashed var(--line);background:var(--surface-2);
+  display:grid;justify-items:center;gap:12px;text-align:center;color:var(--muted)}
+.sv-empty h3{font-size:19px;color:var(--text)}
+.sv-empty p{max-width:520px;font-size:15px}
+.sv-empty .btn{min-height:44px}
+.sv-empty .btn svg{width:16px;height:16px}
+.sv-add{margin-top:14px}
+.sv-addlink{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  min-height:52px;padding:13px 22px;border-radius:980px;background:var(--surface);
+  border:1px solid var(--line);box-shadow:var(--shadow);color:var(--muted);
+  font-size:16px;font-weight:600;text-decoration:none;transition:color .18s,border-color .18s}
+.sv-addlink:hover{color:var(--accent);border-color:var(--accent)}
+.sv-addlink svg{width:16px;height:16px;flex:none}
 
 /* ============ ГАЛЕРЕЯ ПРОДУКТОВ ============ */
 .gal-grid{display:grid;gap:16px;grid-template-columns:1fr;max-width:520px;margin-inline:auto}
@@ -318,8 +353,23 @@ const ME = "mmmaslikov";
 const IMG = "images/";
 const LS_THEME = "tai_site_theme_v1";
 const SCHOOL_SITE = "https://иркутск.точкабудущего.рф/";
+const FORM_URL = "https://disk.yandex.ru/i/8MNbx985d9A7Gg"; // таблица пополнения каталога
 const HERO_IMG = ["hero-school-white.png", "Графика школы «Точка будущего» белыми линиями"];
 const LOGO = "logo-white.png";
+
+/* Категории каталога сервисов (чипы-фильтры) */
+const CATS = [
+  { id:"text",   label:"Тексты и промпты",          emo:"✍️" },
+  { id:"data",   label:"Анализ и данные",           emo:"📊" },
+  { id:"visual", label:"Изображения и презентации", emo:"🎨" },
+  { id:"web",    label:"Сайты и код",               emo:"💻" },
+  { id:"know",   label:"База знаний и обучение",    emo:"📚" },
+  { id:"media",  label:"Аудио и видео",             emo:"🎬" },
+  { id:"docs",   label:"Документы и отчётность",    emo:"📄" },
+  { id:"edu",    label:"Образование и проверка",    emo:"🎓" },
+  { id:"event",  label:"Мероприятия и воспитание",  emo:"🎉" },
+  { id:"other",  label:"Другое",                    emo:"📦" }
+];
 
 const SPHERES = [
   { id:"math", title:"МО математики, информатики, физики и труда", owners:"Масликов Михаил", color:"#0a84ff", icon:"dev", url:"https://mmmaslikov.github.io/mift",
@@ -383,23 +433,33 @@ const SAFETY = [
     text:"Всё, что вы подаёте как собственный продукт, вы должны уметь объяснить: ИИ — инструмент, ответственность — авторская." }
 ];
 
+/* Каталог сервисов: cat — основная категория, tags — дополнительные возможности,
+   author — необязательное поле «Кейс от: ФИ» */
 const SERVICES = [
-  { name:"Qwen", url:"https://chat.qwen.ai/", color:"#0a84ff", icon:"dev", chip:"генерация",
-    desc:"Тексты, код и целые одностраничные сайты — основной инструмент конвейера ТПГ." },
-  { name:"DeepSeek", url:"https://chat.deepseek.com/", color:"#5e5ce6", icon:"eye", chip:"анализ",
-    desc:"Разбор больших текстов, документов, таблиц и результатов исследований." },
-  { name:"Gamma", url:"https://gamma.app/", color:"#ff9f0a", icon:"layers", chip:"презентации",
-    desc:"Быстрые презентации и визуальные материалы из текстового описания." },
-  { name:"GigaChat", url:"https://gigachat.sberbank.ru/", color:"#30d158", icon:"bot", chip:"генерация",
-    desc:"Русскоязычные тексты, промпты и идеи от отечественной модели." },
-  { name:"Шедеврум", url:"https://shedevrum.ai/", color:"#bf5af2", icon:"cam", chip:"изображения",
-    desc:"Генерация картинок, иллюстраций и афиш для уроков и мероприятий." },
-  { name:"GitHub Pages", url:"https://pages.github.com/", color:"#8e8e93", icon:"git", chip:"публикация",
-    desc:"Бесплатный хостинг и публикация сайтов из репозитория: ник.github.io/репо." },
-  { name:"GitVerse Pages", url:"https://gitverse.ru/", color:"#ff375f", icon:"git", chip:"публикация",
-    desc:"Российский аналог: публикация сайтов, вход через Сбер ID." },
-  { name:"Mashuk AiHub", url:"https://mashuk.online/aihub", color:"#ffd60a", icon:"book", chip:"база знаний",
-    desc:"База промптов, приёмов и примеров работы с ИИ для педагогов." }
+  { name:"Qwen", url:"https://chat.qwen.ai/", color:"#0a84ff", icon:"dev", cat:"text",
+    tags:["генерация","промпты","код","сайты"],
+    desc:"Чат-бот, который генерирует тексты, код и целые одностраничные сайты по описанию задачи. Уверенно работает с русским языком и сложными многошаговыми запросами." },
+  { name:"GigaChat", url:"https://gigachat.sberbank.ru/", color:"#30d158", icon:"bot", cat:"text",
+    tags:["генерация","промпты"],
+    desc:"Русскоязычная модель от Сбера: тексты, идеи, промпты и работа с документами." },
+  { name:"DeepSeek", url:"https://chat.deepseek.com/", color:"#5e5ce6", icon:"eye", cat:"data",
+    tags:["анализ","аналитика","документы"],
+    desc:"Чат-бот для разбора больших текстов, таблиц и документов. Сильная сторона — логика и пошаговые объяснения решений." },
+  { name:"Gamma", url:"https://gamma.app/", color:"#ff9f0a", icon:"layers", cat:"visual",
+    tags:["презентации","генерация"],
+    desc:"Генерирует презентации и визуальные материалы из текстового описания за считанные минуты." },
+  { name:"Шедеврум", url:"https://shedevrum.ai/", color:"#bf5af2", icon:"cam", cat:"visual",
+    tags:["изображения","генерация"],
+    desc:"Генерация изображений и иллюстраций по тексту: афиши, обложки и графика для уроков и мероприятий." },
+  { name:"GitHub Pages", url:"https://pages.github.com/", color:"#8e8e93", icon:"git", cat:"web",
+    tags:["сайты","публикация","код"],
+    desc:"Бесплатный хостинг статических сайтов: публикация проекта из репозитория по адресу ник.github.io/репо." },
+  { name:"GitVerse Pages", url:"https://gitverse.ru/", color:"#ff375f", icon:"git", cat:"web",
+    tags:["сайты","публикация"],
+    desc:"Российский аналог GitHub Pages: хостинг и публикация сайтов, вход через Сбер ID." },
+  { name:"Mashuk AiHub", url:"https://mashuk.online/aihub", color:"#ffd60a", icon:"book", cat:"know",
+    tags:["обучение","промпты","поиск"],
+    desc:"База знаний для педагогов: проверенные промпты, приёмы и примеры работы с ИИ." }
 ];
 
 const PRODUCTS = [
@@ -444,6 +504,7 @@ const ICONS = {
   ext:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5"/></svg>',
   mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
   copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
   down:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>',
   sun:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M19.4 4.6l-1.7 1.7M6.3 17.7l-1.7 1.7"/></svg>',
   moon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 14.2A8.6 8.6 0 0 1 9.8 3.4a8.6 8.6 0 1 0 10.8 10.8z"/></svg>',
@@ -451,7 +512,7 @@ const ICONS = {
 };
 
 /* ================= STATE ================= */
-const state = { menu:false, theme:"auto" };
+const state = { menu:false, theme:"auto", cat:"all", q:"" };
 const missingFiles = new Set();
 
 /* ================= УТИЛИТЫ ================= */
@@ -475,6 +536,7 @@ function bindImages(root){
     img.addEventListener("error", ()=>{ missingFiles.add(f); hide(); });
   });
 }
+const catOf = id => CATS.find(c=>c.id===id) || {label:"—", emo:""};
 
 /* ================= RENDER ================= */
 function renderApp(){
@@ -531,7 +593,7 @@ function renderApp(){
         <article class="tcard" style="--acc-p:#bf5af2"><div class="t-head"><span class="ai">${ICONS.spark}</span><h3>Кто поддерживает</h3></div><p class="j">Сайт создаёт и развивает ТПГ «ГенИИ» — творческая проектировочная группа под руководством Масликова Михаила Михайловича. Страницы сфер наполняют участники: сайт развивается вместе с командой.</p></article>
       </div>
       <div class="chip-row rv">
-        <span class="chip">11 сфер комплекса</span><span class="chip">8 проверенных сервисов</span>
+        <span class="chip">11 сфер комплекса</span><span class="chip">Каталог сервисов с поиском</span>
         <span class="chip">50+ продуктов за год</span><span class="chip">2026/2027 учебный год</span>
       </div>
     </div></section>
@@ -550,9 +612,15 @@ function renderApp(){
     </div></section>
 
     <section class="sec sec--m2" id="services"><div class="wrap">
-      <div class="sec-head center rv"><span class="sec-kicker">Сервисы</span><h2>Что доступно в школе</h2>
-      <p class="sec-lead">Проверенный набор сервисов: генерация текстов и кода, презентации, изображения, публикация сайтов и база знаний.</p></div>
-      <div class="sv-grid rv" id="sv-grid"></div>
+      <div class="sec-head center rv"><span class="sec-kicker">Сервисы</span><h2>Каталог инструментов школы</h2>
+      <p class="sec-lead">Проверенные сервисы с поиском и фильтрами по разделам. Пустые разделы наполняют сотрудники комплекса: добавьте свой проверенный инструмент в общую таблицу.</p></div>
+      <div class="sv-tools rv">
+        <div class="sv-search">${ICONS.search}<input id="sv-input" type="search" placeholder="Поиск по названию, тегу или описанию…" aria-label="Поиск по каталогу сервисов"></div>
+        <div class="sv-cats" id="sv-cats" role="group" aria-label="Разделы каталога"></div>
+        <div class="sv-count" id="sv-count" role="status" aria-live="polite"></div>
+      </div>
+      <div class="sv-grid" id="sv-grid"></div>
+      <div class="sv-add rv"><a class="sv-addlink" href="${FORM_URL}" target="_blank" rel="noopener">Добавить свой инструмент ${ICONS.ext}</a></div>
     </div></section>
 
     <section class="sec" id="products"><div class="wrap">
@@ -596,7 +664,7 @@ function renderApp(){
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>`;
-  renderMarks(); renderCards(); renderSafety(); renderServices(); renderGallery();
+  renderMarks(); renderCards(); renderSafety(); renderCats(); renderServices(); renderGallery();
   bindImages(document);
 }
 
@@ -635,14 +703,54 @@ function renderSafety(){
       <p class="j">${esc(s.text)}</p>
     </article>`).join("");
 }
-function renderServices(){
-  $("#sv-grid").innerHTML = SERVICES.map(s=>`
-    <a class="scard" style="--acc-p:${s.color}" href="${esc(s.url)}" target="_blank" rel="noopener">
-      <span class="s-head"><span class="si">${ICONS[s.icon]}</span><h3>${esc(s.name)}</h3></span>
-      <p class="j">${esc(s.desc)}</p>
-      <span class="s-foot"><span class="go">Открыть сервис ${ICONS.ext}</span></span>
-    </a>`).join("");
+
+/* ---- каталог сервисов: фильтры + поиск ---- */
+function renderCats(){
+  const counts = {};
+  CATS.forEach(c=>counts[c.id]=SERVICES.filter(s=>s.cat===c.id).length);
+  const total = SERVICES.length;
+  $("#sv-cats").innerHTML =
+    `<button class="cat-chip${state.cat==="all"?" on":""}" type="button" data-cat="all" aria-pressed="${state.cat==="all"}">⭐ Все <span class="cn">${total}</span></button>` +
+    CATS.map(c=>`
+      <button class="cat-chip${state.cat===c.id?" on":""}${counts[c.id]===0?" zero":""}" type="button"
+        data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${c.emo} ${esc(c.label)} <span class="cn">${counts[c.id]}</span></button>`).join("");
 }
+function filteredServices(){
+  const q = state.q.trim().toLowerCase();
+  return SERVICES.filter(s=>{
+    if (state.cat!=="all" && s.cat!==state.cat) return false;
+    if (!q) return true;
+    const hay = (s.name+" "+s.desc+" "+s.tags.join(" ")+" "+catOf(s.cat).label).toLowerCase();
+    return hay.includes(q);
+  });
+}
+function renderServices(){
+  const list = filteredServices();
+  $("#sv-count").textContent = `Показано ${list.length} из ${SERVICES.length} сервисов`;
+  const grid = $("#sv-grid");
+  if (!list.length){
+    grid.innerHTML = state.q.trim()
+      ? `<div class="sv-empty"><h3>Ничего не найдено</h3>
+           <p>По запросу «${esc(state.q.trim())}» в текущем разделе совпадений нет. Попробуйте другое слово или сбросьте фильтры.</p>
+           <button class="btn" type="button" data-reset>Сбросить фильтры</button></div>`
+      : `<div class="sv-empty"><h3>Раздел наполняется</h3>
+           <p>В этой категории пока нет инструментов — коллеги как раз тестируют свои кейсы. Поделитесь проверенным сервисом, и он появится здесь.</p>
+           <a class="btn" href="${FORM_URL}" target="_blank" rel="noopener">Добавить инструмент ${ICONS.ext}</a></div>`;
+    return;
+  }
+  grid.innerHTML = list.map(s=>{
+    const c = catOf(s.cat);
+    return `
+    <a class="scard" style="--acc-p:${s.color}" href="${esc(s.url)}" target="_blank" rel="noopener">
+      <span class="s-head"><span class="si">${ICONS[s.icon]}</span><h3>${esc(s.name)}</h3><span class="s-ext">${ICONS.ext}</span></span>
+      <p class="j">${esc(s.desc)}</p>
+      <span class="s-tags">${s.tags.map(t=>`<span class="tag">#${esc(t)}</span>`).join("")}</span>
+      ${s.author ? `<span class="s-author">Кейс от: ${esc(s.author)}</span>` : ""}
+      <span class="s-foot"><span class="s-cat">${c.emo} ${esc(c.label)}</span></span>
+    </a>`;
+  }).join("");
+}
+
 function renderGallery(){
   $("#gal").innerHTML = PRODUCTS.map(([file,cap])=>`
     <figure class="gal-card">
@@ -679,7 +787,16 @@ function bindHandlers(){
   $("#theme-btn").addEventListener("click", toggleTheme);
   $("#burger").addEventListener("click", ()=>{ state.menu=!state.menu; $("#menu").classList.toggle("open",state.menu); $("#burger").setAttribute("aria-expanded",String(state.menu)); document.body.classList.toggle("lock",state.menu); });
   $$("#menu a").forEach(a=>a.addEventListener("click", ()=>{ state.menu=false; $("#menu").classList.remove("open"); $("#burger").setAttribute("aria-expanded","false"); document.body.classList.remove("lock"); }));
+  $("#sv-input").addEventListener("input", e=>{ state.q = e.target.value; renderServices(); });
   document.addEventListener("click", e=>{
+    const chip = e.target.closest("[data-cat]");
+    if (chip){ state.cat = chip.dataset.cat; renderCats(); renderServices(); return; }
+    const reset = e.target.closest("[data-reset]");
+    if (reset){
+      state.q=""; state.cat="all";
+      const inp=$("#sv-input"); if(inp) inp.value="";
+      renderCats(); renderServices(); return;
+    }
     const go = e.target.closest("[data-goto]");
     if (go){ const t=document.querySelector(go.dataset.goto); t?.scrollIntoView({behavior:"smooth"}); return; }
     const soon = e.target.closest("[data-soon]");
