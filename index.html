@@ -165,6 +165,14 @@ a{color:var(--accent)}
     padding:8px 4px;min-height:58px;white-space:normal;text-align:center;line-height:1.15}
   .mark svg{width:18px;height:18px}
 }
+@media (max-width:759px){
+  .sv-cats{gap:6px}
+  .cat-chip{flex:0 0 auto;padding:8px 12px;gap:6px;min-height:40px}
+  .cat-chip .cl{display:none}
+  .cat-chip.on .cl,
+  .cat-chip[data-cat="all"] .cl{display:inline}
+  .cat-chip .cn{padding:1px 6px;font-size:11px}
+}
 
 /* ============ КАРТОЧКИ ============ */
 .two-col{display:grid;gap:16px;max-width:1120px;margin-inline:auto}
@@ -451,15 +459,12 @@ const SERVICES = [
   { name:"Шедеврум", url:"https://shedevrum.ai/", color:"#bf5af2", icon:"cam", cat:"visual",
     tags:["изображения","генерация"],
     desc:"Генерация изображений и иллюстраций по тексту: афиши, обложки и графика для уроков и мероприятий." },
-  { name:"GitHub Pages", url:"https://pages.github.com/", color:"#8e8e93", icon:"git", cat:"web",
+  { name:"GitHub Pages", url:"https://github.com/", color:"#8e8e93", icon:"git", cat:"web",
     tags:["сайты","публикация","код"],
     desc:"Бесплатный хостинг статических сайтов: публикация проекта из репозитория по адресу ник.github.io/репо." },
   { name:"GitVerse Pages", url:"https://gitverse.ru/", color:"#ff375f", icon:"git", cat:"web",
     tags:["сайты","публикация"],
-    desc:"Российский аналог GitHub Pages: хостинг и публикация сайтов, вход через Сбер ID." },
-  { name:"Mashuk AiHub", url:"https://mashuk.online/aihub", color:"#ffd60a", icon:"book", cat:"know",
-    tags:["обучение","промпты","поиск"],
-    desc:"База знаний для педагогов: проверенные промпты, приёмы и примеры работы с ИИ." }
+    desc:"Российский аналог GitHub Pages: хостинг и публикация сайтов, вход через Сбер ID." }
 ];
 
 const PRODUCTS = [
@@ -710,10 +715,11 @@ function renderCats(){
   CATS.forEach(c=>counts[c.id]=SERVICES.filter(s=>s.cat===c.id).length);
   const total = SERVICES.length;
   $("#sv-cats").innerHTML =
-    `<button class="cat-chip${state.cat==="all"?" on":""}" type="button" data-cat="all" aria-pressed="${state.cat==="all"}">⭐ Все <span class="cn">${total}</span></button>` +
+    `<button class="cat-chip${state.cat==="all"?" on":""}" type="button" data-cat="all"
+      aria-pressed="${state.cat==="all"}" aria-label="Все разделы" title="Все разделы">⭐ <span class="cl">Все</span> <span class="cn">${total}</span></button>` +
     CATS.map(c=>`
       <button class="cat-chip${state.cat===c.id?" on":""}${counts[c.id]===0?" zero":""}" type="button"
-        data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${c.emo} ${esc(c.label)} <span class="cn">${counts[c.id]}</span></button>`).join("");
+        data-cat="${c.id}" aria-pressed="${state.cat===c.id}" aria-label="${esc(c.label)}" title="${esc(c.label)}">${c.emo} <span class="cl">${esc(c.label)}</span> <span class="cn">${counts[c.id]}</span></button>`).join("");
 }
 function filteredServices(){
   const q = state.q.trim().toLowerCase();
