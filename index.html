@@ -165,14 +165,6 @@ a{color:var(--accent)}
     padding:8px 4px;min-height:58px;white-space:normal;text-align:center;line-height:1.15}
   .mark svg{width:18px;height:18px}
 }
-@media (max-width:759px){
-  .sv-cats{gap:6px}
-  .cat-chip{flex:0 0 auto;padding:8px 12px;gap:6px;min-height:40px}
-  .cat-chip .cl{display:none}
-  .cat-chip.on .cl,
-  .cat-chip[data-cat="all"] .cl{display:inline}
-  .cat-chip .cn{padding:1px 6px;font-size:11px}
-}
 
 /* ============ КАРТОЧКИ ============ */
 .two-col{display:grid;gap:16px;max-width:1120px;margin-inline:auto}
@@ -235,16 +227,30 @@ a{color:var(--accent)}
   border:1px solid var(--line);border-radius:980px;padding:13px 22px 13px 48px;min-height:52px;box-shadow:var(--shadow)}
 .sv-search input::placeholder{color:var(--muted)}
 .sv-search input:focus{outline:3px solid var(--accent);outline-offset:2px}
-.sv-cats{display:flex;flex-wrap:wrap;gap:8px}
-.cat-chip{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 16px;border-radius:980px;border:1px solid var(--line);
+/* ровные ряды фильтров: 4 / 4 / 3 */
+.sv-cats{display:grid;grid-template-columns:repeat(12,1fr);gap:8px}
+.cat-chip{grid-column:span var(--span,3);display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:9px 16px;border-radius:980px;border:1px solid var(--line);
   background:var(--surface);color:var(--text);font:inherit;font-size:14px;font-weight:600;cursor:pointer;
-  transition:all .18s;min-height:42px;flex:1 1 auto}
+  transition:all .18s;min-height:42px}
 .cat-chip:hover{border-color:var(--accent);color:var(--accent)}
 .cat-chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .cat-chip .cn{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;
   background:color-mix(in srgb,var(--text) 8%,transparent);color:var(--muted)}
 .cat-chip.on .cn{background:rgba(255,255,255,.22);color:#fff}
 .cat-chip.zero:not(.on){opacity:.6}
+@media (max-width:1000px){
+  .sv-cats{grid-template-columns:repeat(2,1fr)}
+  .cat-chip{grid-column:auto}
+}
+@media (max-width:759px){
+  .sv-cats{display:flex;flex-wrap:wrap;gap:6px}
+  .cat-chip{flex:0 0 auto;padding:8px 12px;gap:6px;min-height:40px}
+  .cat-chip .cl{display:none}
+  .cat-chip.on .cl,
+  .cat-chip[data-cat="all"] .cl{display:inline}
+  .cat-chip .cn{padding:1px 6px;font-size:11px}
+}
 .sv-count{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .sv-grid{display:grid;gap:16px;grid-template-columns:1fr}
 @media (min-width:640px){.sv-grid{grid-template-columns:repeat(2,1fr)}}
@@ -260,11 +266,13 @@ a{color:var(--accent)}
 .s-head .s-ext{margin-left:auto;color:var(--muted);display:grid;place-items:center;flex:none;transition:color .2s,transform .2s}
 .s-head .s-ext svg{width:16px;height:16px}
 .scard:hover .s-ext{color:var(--acc-p);transform:translate(2px,-2px)}
-.scard p{color:var(--muted);font-size:14.5px;flex:1}
+.scard p{color:var(--muted);font-size:14.5px}
+.s-note{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;line-height:1.45;color:var(--muted);
+  background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.s-note svg{width:14px;height:14px;flex:none;margin-top:2px;color:var(--acc-p)}
 .s-tags{display:flex;flex-wrap:wrap;gap:6px}
 .s-tags .tag{font-size:12px;padding:4px 10px;border-radius:999px;background:var(--surface-2);
   border:1px solid var(--line);color:var(--muted);font-weight:600}
-.s-author{font-size:12.5px;color:var(--muted);font-style:italic}
 .s-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:auto}
 .s-cat{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);font-weight:600}
 .sv-empty{grid-column:1/-1;padding:clamp(28px,4vw,44px);border-radius:var(--radius);
@@ -365,18 +373,18 @@ const FORM_URL = "https://docs.google.com/spreadsheets/d/1RXDAtGHXYtv43-pV5UYcDX
 const HERO_IMG = ["hero-school-white.png", "Графика школы «Точка будущего» белыми линиями"];
 const LOGO = "logo-white.png";
 
-/* Категории каталога сервисов (чипы-фильтры) */
+/* Категории каталога: порядок задаёт ряды фильтров (4 / 4 / 3) */
 const CATS = [
-  { id:"text",   label:"Тексты и промпты",          emo:"✍️" },
-  { id:"data",   label:"Анализ и данные",           emo:"📊" },
-  { id:"visual", label:"Изображения и презентации", emo:"🎨" },
-  { id:"web",    label:"Сайты и код",               emo:"💻" },
-  { id:"know",   label:"База знаний и обучение",    emo:"📚" },
-  { id:"media",  label:"Аудио и видео",             emo:"🎬" },
-  { id:"docs",   label:"Документы и отчётность",    emo:"📄" },
-  { id:"edu",    label:"Образование и проверка",    emo:"🎓" },
-  { id:"event",  label:"Мероприятия и воспитание",  emo:"🎉" },
-  { id:"other",  label:"Другое",                    emo:"📦" }
+  { id:"text",   label:"Тексты и промпты",          emo:"✍️", span:3 },
+  { id:"visual", label:"Изображения и презентации", emo:"🎨", span:3 },
+  { id:"data",   label:"Анализ и данные",           emo:"📊", span:3 },
+  { id:"web",    label:"Сайты и код",               emo:"💻", span:3 },
+  { id:"media",  label:"Аудио и видео",             emo:"🎬", span:3 },
+  { id:"docs",   label:"Документы и отчётность",    emo:"📄", span:3 },
+  { id:"edu",    label:"Образование и проверка",    emo:"🎓", span:3 },
+  { id:"know",   label:"База знаний и обучение",    emo:"📚", span:4 },
+  { id:"event",  label:"Мероприятия и воспитание",  emo:"🎉", span:4 },
+  { id:"other",  label:"Другое",                    emo:"📦", span:4 }
 ];
 
 const SPHERES = [
@@ -412,10 +420,6 @@ const SPHERES = [
     items:["Генерация сценариев часов общения и мероприятий.",
            "Корректировка официальных сообщений, постов, характеристик и отчётов.",
            "Аналитика встреч и родительских собраний по диктофонной записи."] },
-  { id:"lib", title:"Многофункциональный информационно-библиотечный центр", owners:"Бортникова Анна", color:"#8e8e93", icon:"book", url:"",
-    items:["Персональная аналитика по каждому читателю на основе данных АБИС.",
-           "Прогноз популярных книг для планирования фонда и бюджета.",
-           "Автоматические рекомендации книг по интересам читателя."] },
   { id:"inkl", title:"Служба сопровождения инклюзивного образования", owners:"Абрамова Валерия", color:"#64d2ff", icon:"heart", url:"",
     items:["Анализ диагностики и планирование коррекционной работы.",
            "Адаптация материалов под индивидуальные образовательные потребности.",
@@ -441,30 +445,69 @@ const SAFETY = [
     text:"Всё, что вы подаёте как собственный продукт, вы должны уметь объяснить: ИИ — инструмент, ответственность — авторская." }
 ];
 
-/* Каталог сервисов: cat — основная категория, tags — дополнительные возможности,
-   author — необязательное поле «Кейс от: ФИ» */
+/* Каталог сервисов: cat — раздел, tags — возможности,
+   note — плашка «Опыт коллег» / «Доступ» (есть у каждой карточки) */
 const SERVICES = [
   { name:"Qwen", url:"https://chat.qwen.ai/", color:"#0a84ff", icon:"dev", cat:"text",
-    tags:["генерация","промпты","код","сайты"],
-    desc:"Чат-бот, который генерирует тексты, код и целые одностраничные сайты по описанию задачи. Уверенно работает с русским языком и сложными многошаговыми запросами." },
+    tags:["генерация","код","сайты","сценарии"],
+    desc:"Чат-бот для текстов, кода и целых одностраничных сайтов по описанию задачи. Уверенно держит русский язык и сложные многошаговые запросы.",
+    note:"Опыт коллег: сценарии мероприятий, долгосрочные проекты с опорой на загруженную документацию, задники для событий." },
   { name:"GigaChat", url:"https://giga.chat/", color:"#30d158", icon:"bot", cat:"text",
     tags:["генерация","промпты"],
-    desc:"Русскоязычная модель от Сбера: тексты, идеи, промпты и работа с документами." },
-  { name:"DeepSeek", url:"https://chat.deepseek.com/", color:"#5e5ce6", icon:"eye", cat:"data",
-    tags:["анализ","аналитика","документы"],
-    desc:"Чат-бот для разбора больших текстов, таблиц и документов. Сильная сторона — логика и пошаговые объяснения решений." },
+    desc:"Русскоязычная модель от Сбера для текстов, идей и промптов. Хорошо работает с документами и помогает быстро собирать черновики материалов.",
+    note:"Опыт коллег: промпты и идеи для учебных проектов, черновики выступлений и постов." },
+  { name:"DeepSeek", url:"https://chat.deepseek.com/", color:"#5e5ce6", icon:"eye", cat:"text",
+    tags:["анализ","аналитика","документы","обучение"],
+    desc:"Чат-бот для разбора больших текстов, таблиц и документов. Сильная сторона — логика, пошаговые объяснения и аккуратные выводы по данным.",
+    note:"Опыт коллег: идеи и каркасы уроков и проектов, разбор сложных тем по шагам." },
   { name:"Gamma", url:"https://gamma.app/", color:"#ff9f0a", icon:"layers", cat:"visual",
     tags:["презентации","генерация"],
-    desc:"Генерирует презентации и визуальные материалы из текстового описания за считанные минуты." },
+    desc:"Генерирует презентации и визуальные материалы из текстового описания. Черновик урока или выступления собирается за считанные минуты.",
+    note:"Опыт коллег: презентации к урокам и педсоветам, визуальные конспекты тем." },
   { name:"Шедеврум", url:"https://shedevrum.ai/", color:"#bf5af2", icon:"cam", cat:"visual",
     tags:["изображения","генерация"],
-    desc:"Генерация изображений и иллюстраций по тексту: афиши, обложки и графика для уроков и мероприятий." },
+    desc:"Генерация изображений и иллюстраций по тексту: афиши, обложки и графика. Подходит для уроков, мероприятий и оформления кабинетов.",
+    note:"Опыт коллег: афиши событий, обложки проектов и иллюстрации к заданиям." },
   { name:"GitHub", url:"https://github.com/", color:"#8e8e93", icon:"git", cat:"web",
     tags:["сайты","публикация","код"],
-    desc:"Бесплатный хостинг статических сайтов: публикация проекта из репозитория по адресу ник.github.io/репо." },
+    desc:"Бесплатный хостинг статических сайтов из репозитория. Проект публикуется по адресу ник.github.io/репо и открывается с любого устройства.",
+    note:"Опыт коллег: публикация сайтов курсов, тренажёров и страниц сфер ТПГ." },
   { name:"GitVerse", url:"https://gitverse.ru/", color:"#ff375f", icon:"git", cat:"web",
     tags:["сайты","публикация"],
-    desc:"Российский аналог GitHub: хостинг и публикация сайтов, вход через Сбер ID." }
+    desc:"Российский аналог GitHub для хостинга и публикации сайтов. Вход через Сбер ID, страницы доступны по постоянной ссылке без VPN.",
+    note:"Опыт коллег: резервная площадка публикации, когда GitHub недоступен." },
+  { name:"Mylens", url:"https://mylens.ai/", color:"#30b0c7", icon:"timeline", cat:"visual",
+    tags:["инфографика","схемы","PDF"],
+    desc:"Строит ленты времени, схемы и таблицы по запросу или загруженному PDF. Сам находит данные и превращает их в наглядную визуализацию.",
+    note:"Опыт коллег: ленты времени по истории и схемы процессов к урокам." },
+  { name:"Transkribus", url:"https://www.transkribus.org/", color:"#a2845e", icon:"scan", cat:"docs",
+    tags:["документы","распознавание"],
+    desc:"Переводит сканы исторических источников в редактируемый текст. Распознаёт рукописные и старопечатные документы на разных языках.",
+    note:"Опыт коллег: разбор архивных документов и источников для проектов." },
+  { name:"Алиса AI", url:"https://alice.yandex.ru/", color:"#ff453a", icon:"sparkles", cat:"visual",
+    tags:["изображения","видео","генерация"],
+    desc:"Генерирует и «оживляет» изображения: картинки, фото-шпаргалки и гифки. Помогает быстро делать наглядность по произведениям и темам.",
+    note:"Опыт коллег: фото-шпаргалки по произведениям и оживление иллюстраций." },
+  { name:"Suno", url:"https://suno-ai.online/", color:"#ff2d92", icon:"music", cat:"media",
+    tags:["аудио","генерация"],
+    desc:"Создаёт песни по текстовой идее: музыка и вокал за минуту. Годится для заставок, мероприятий и творческих заданий учеников.",
+    note:"Опыт коллег: песни-заставки к мероприятиям и творческим заданиям." },
+  { name:"zvukogram", url:"https://zvukogram.com/", color:"#64d2ff", icon:"wave", cat:"media",
+    tags:["аудио","распознавание"],
+    desc:"Озвучивает тексты нейроголосами и расшифровывает записи в текст. Удобно для аудиоверсий материалов и конспектов по записям встреч.",
+    note:"Доступ: работает в России без VPN, оплата российскими картами." },
+  { name:"Wayground", url:"https://wayground.com/", color:"#34c759", icon:"game", cat:"edu",
+    tags:["обучение","проверка","уроки","адаптация"],
+    desc:"Интерактивные уроки, викторины и игры с мгновенной автопроверкой. Прогресс каждого ученика виден в реальном времени, ИИ ускоряет тесты.",
+    note:"Доступ: не работает на детских устройствах из-за сети. Обходной путь — QR-коды и бланки с автопроверкой через приложение на телефоне." },
+  { name:"Perplexity", url:"https://www.perplexity.ai/", color:"#0071e3", icon:"search", cat:"data",
+    tags:["анализ","аналитика","обучение"],
+    desc:"Поисковый ИИ-ассистент, который отвечает со ссылками на источники. Удобно для исследовательской деятельности и проверки фактов.",
+    note:"Доступ: бесплатная версия в Microsoft Store, установка без пароля администратора." },
+  { name:"Comet", url:"https://www.perplexity.ai/comet", color:"#ff6482", icon:"browser", cat:"data",
+    tags:["сайты","поиск","анализ"],
+    desc:"Браузер со встроенным ИИ-ассистентом Perplexity. Анализирует содержимое страницы и обобщает информацию сразу из нескольких вкладок.",
+    note:"Доступ: бесплатная версия в Microsoft Store, установка без пароля администратора." }
 ];
 
 const PRODUCTS = [
@@ -478,8 +521,8 @@ const PRODUCTS = [
 
 const MARKS = [
   ["#spheres", "Сферы", "layers", "#0a84ff"],
-  ["#safety", "Безопасность", "shield", "#ff453a"],
   ["#services", "Сервисы", "bot", "#30d158"],
+  ["#safety", "Безопасность", "shield", "#ff453a"],
   ["#products", "Продукты", "cam", "#ff9f0a"],
   ["https://mmmaslikov.github.io/tpg/", "Паспорт ТПГ", "team", "#bf5af2", true]
 ];
@@ -513,7 +556,14 @@ const ICONS = {
   down:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>',
   sun:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M19.4 4.6l-1.7 1.7M6.3 17.7l-1.7 1.7"/></svg>',
   moon:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 14.2A8.6 8.6 0 0 1 9.8 3.4a8.6 8.6 0 1 0 10.8 10.8z"/></svg>',
-  burger:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
+  burger:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+  timeline:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  scan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M8 10h8M8 14h5"/></svg>',
+  music:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
+  wave:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 10v4M7 7v10M11 4v16M15 7v10M19 10v4"/></svg>',
+  game:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg>',
+  browser:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg>',
+  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>'
 };
 
 /* ================= STATE ================= */
@@ -552,7 +602,7 @@ function renderApp(){
       <span>Точка ИИ</span></a>
     <nav class="nav-links" aria-label="Разделы сайта">
       <a href="#about" data-spy="about">О сайте</a><a href="#spheres" data-spy="spheres">Сферы</a>
-      <a href="#safety" data-spy="safety">Безопасность</a><a href="#services" data-spy="services">Сервисы</a>
+      <a href="#services" data-spy="services">Сервисы</a><a href="#safety" data-spy="safety">Безопасность</a>
       <a href="#products" data-spy="products">Продукты</a><a href="#contacts" data-spy="contacts">Контакты</a>
     </nav>
     <div class="nav-actions">
@@ -561,8 +611,8 @@ function renderApp(){
     </div>
   </div></header>
   <nav class="menu" id="menu" aria-label="Мобильное меню">
-    <a href="#about">О сайте</a><a href="#spheres">Сферы</a><a href="#safety">Безопасность</a>
-    <a href="#services">Сервисы</a><a href="#products">Продукты</a><a href="#contacts">Контакты</a>
+    <a href="#about">О сайте</a><a href="#spheres">Сферы</a><a href="#services">Сервисы</a>
+    <a href="#safety">Безопасность</a><a href="#products">Продукты</a><a href="#contacts">Контакты</a>
   </nav>
   <main id="top">
     <section class="hero"><div class="wrap">
@@ -589,16 +639,16 @@ function renderApp(){
     </div></section>
 
     <section class="sec" id="about"><div class="wrap">
-      <div class="sec-head center rv"><span class="sec-kicker">О сайте</span><h2>Одна точка входа во всё, что связано с ИИ в комплексе</h2>
+      <div class="sec-head center rv"><span class="sec-kicker">О сайте</span><h2>Одна точка входа во всё,<br>что превращает ИИ в ежедневный инструмент</h2>
       <p class="sec-lead">Здесь собраны проверенные сервисы, готовые промпты, инструкции и страницы методических объединений и служб — чтобы ИИ экономил время, а не съедал его на поиски и догадки.</p></div>
       <div class="two-col rv">
         <article class="tcard" style="--acc-p:#0a84ff"><div class="t-head"><span class="ai">${ICONS.layers}</span><h3>Зачем этот сайт</h3></div><p class="j">Убрать разрыв между интересом к нейросетям и их реальной пользой: вместо стихийных экспериментов — единое место с проверенными инструментами, алгоритмами и примерами применения в каждой сфере комплекса.</p></article>
-        <article class="tcard" style="--acc-p:#30d158"><div class="t-head"><span class="ai">${ICONS.team}</span><h3>Для кого</h3></div><p class="j">Для всех сотрудников: учителей-предметников, психологов и тьюторов, педагогов-организаторов, сотрудников Буклаба, специалистов инклюзивного сопровождения и руководителей. У каждой сферы — своя страница со своими кейсами.</p></article>
+        <article class="tcard" style="--acc-p:#30d158"><div class="t-head"><span class="ai">${ICONS.team}</span><h3>Для кого</h3></div><p class="j">Для всех сотрудников: учителей-предметников, психологов и тьюторов, педагогов-организаторов, специалистов инклюзивного сопровождения и руководителей. У каждой сферы — своя страница со своими кейсами.</p></article>
         <article class="tcard" style="--acc-p:#ff9f0a"><div class="t-head"><span class="ai">${ICONS.check}</span><h3>Проверенные кейсы</h3></div><p class="j">В основе контента — реальная работа: кейсы, промпты и инструкции проверяются сотрудниками на уроках, совещаниях и мероприятиях, а затем публикуются, чтобы коллеги могли переиспользовать готовые решения.</p></article>
         <article class="tcard" style="--acc-p:#bf5af2"><div class="t-head"><span class="ai">${ICONS.spark}</span><h3>Кто поддерживает</h3></div><p class="j">Сайт создаёт и развивает ТПГ «ГенИИ» — творческая проектировочная группа под руководством Масликова Михаила Михайловича. Страницы сфер наполняют участники: сайт развивается вместе с командой.</p></article>
       </div>
       <div class="chip-row rv">
-        <span class="chip">11 сфер комплекса</span><span class="chip">Каталог сервисов с поиском</span>
+        <span class="chip">10 сфер комплекса</span><span class="chip">Каталог сервисов с поиском</span>
         <span class="chip">50+ продуктов за год</span><span class="chip">2026/2027 учебный год</span>
       </div>
     </div></section>
@@ -609,14 +659,7 @@ function renderApp(){
       <div class="cards" id="cards"></div>
     </div></section>
 
-    <section class="sec" id="safety"><div class="wrap">
-      <div class="sec-head center rv"><span class="sec-kicker">Безопасность</span><h2>Этика и персональные данные</h2>
-      <p class="sec-lead">Шесть правил, которые обязательны для всех сотрудников при работе с ИИ. Основа — Федеральный закон № 152-ФЗ «О персональных данных».</p></div>
-      <div class="two-col rv" id="safety-grid"></div>
-      <div class="note rv">Подробная памятка по работе с персональными данными готовится ТПГ «ГенИИ» и будет опубликована здесь отдельным документом. До её выхода действуют шесть правил выше.</div>
-    </div></section>
-
-    <section class="sec sec--m2" id="services"><div class="wrap">
+    <section class="sec" id="services"><div class="wrap">
       <div class="sec-head center rv"><span class="sec-kicker">Сервисы</span><h2>Каталог инструментов школы</h2>
       <p class="sec-lead">Проверенные сервисы с поиском и фильтрами по разделам. Пустые разделы наполняют сотрудники комплекса: добавьте свой проверенный инструмент в общую таблицу.</p></div>
       <div class="sv-tools rv">
@@ -626,6 +669,13 @@ function renderApp(){
       </div>
       <div class="sv-grid" id="sv-grid"></div>
       <div class="sv-add rv"><a class="sv-addlink" href="${FORM_URL}" target="_blank" rel="noopener">Добавить свой инструмент ${ICONS.ext}</a></div>
+    </div></section>
+
+    <section class="sec sec--m2" id="safety"><div class="wrap">
+      <div class="sec-head center rv"><span class="sec-kicker">Безопасность</span><h2>Этика и персональные данные</h2>
+      <p class="sec-lead">Шесть правил, которые обязательны для всех сотрудников при работе с ИИ. Основа — Федеральный закон № 152-ФЗ «О персональных данных».</p></div>
+      <div class="two-col rv" id="safety-grid"></div>
+      <div class="note rv">Подробная памятка по работе с персональными данными готовится ТПГ «ГенИИ» и будет опубликована здесь отдельным документом. До её выхода действуют шесть правил выше.</div>
     </div></section>
 
     <section class="sec" id="products"><div class="wrap">
@@ -715,18 +765,18 @@ function renderCats(){
   CATS.forEach(c=>counts[c.id]=SERVICES.filter(s=>s.cat===c.id).length);
   const total = SERVICES.length;
   $("#sv-cats").innerHTML =
-    `<button class="cat-chip${state.cat==="all"?" on":""}" type="button" data-cat="all"
+    `<button class="cat-chip${state.cat==="all"?" on":""}" type="button" data-cat="all" style="--span:3"
       aria-pressed="${state.cat==="all"}" aria-label="Все разделы" title="Все разделы">⭐ <span class="cl">Все</span> <span class="cn">${total}</span></button>` +
     CATS.map(c=>`
       <button class="cat-chip${state.cat===c.id?" on":""}${counts[c.id]===0?" zero":""}" type="button"
-        data-cat="${c.id}" aria-pressed="${state.cat===c.id}" aria-label="${esc(c.label)}" title="${esc(c.label)}">${c.emo} <span class="cl">${esc(c.label)}</span> <span class="cn">${counts[c.id]}</span></button>`).join("");
+        data-cat="${c.id}" style="--span:${c.span}" aria-pressed="${state.cat===c.id}" aria-label="${esc(c.label)}" title="${esc(c.label)}">${c.emo} <span class="cl">${esc(c.label)}</span> <span class="cn">${counts[c.id]}</span></button>`).join("");
 }
 function filteredServices(){
   const q = state.q.trim().toLowerCase();
   return SERVICES.filter(s=>{
     if (state.cat!=="all" && s.cat!==state.cat) return false;
     if (!q) return true;
-    const hay = (s.name+" "+s.desc+" "+s.tags.join(" ")+" "+catOf(s.cat).label).toLowerCase();
+    const hay = (s.name+" "+s.desc+" "+s.tags.join(" ")+" "+catOf(s.cat).label+" "+(s.note||"")).toLowerCase();
     return hay.includes(q);
   });
 }
@@ -746,12 +796,15 @@ function renderServices(){
   }
   grid.innerHTML = list.map(s=>{
     const c = catOf(s.cat);
+    const note = s.note
+      ? `<span class="s-note">${ICONS.info}<span>${esc(s.note)}</span></span>`
+      : "";
     return `
     <a class="scard" style="--acc-p:${s.color}" href="${esc(s.url)}" target="_blank" rel="noopener">
       <span class="s-head"><span class="si">${ICONS[s.icon]}</span><h3>${esc(s.name)}</h3><span class="s-ext">${ICONS.ext}</span></span>
       <p class="j">${esc(s.desc)}</p>
+      ${note}
       <span class="s-tags">${s.tags.map(t=>`<span class="tag">#${esc(t)}</span>`).join("")}</span>
-      ${s.author ? `<span class="s-author">Кейс от: ${esc(s.author)}</span>` : ""}
       <span class="s-foot"><span class="s-cat">${c.emo} ${esc(c.label)}</span></span>
     </a>`;
   }).join("");
@@ -781,7 +834,7 @@ function initSpy(){
   const io = new IntersectionObserver(es=>es.forEach(en=>{
     if (en.isIntersecting){ $$(".nav-links a").forEach(a=>a.classList.toggle("active", a.dataset.spy===en.target.id)); }
   }), {rootMargin:"-40% 0px -55% 0px"});
-  ["about","spheres","safety","services","products","contacts"].forEach(id=>{ const el=document.getElementById(id); if(el) io.observe(el); });
+  ["about","spheres","services","safety","products","contacts"].forEach(id=>{ const el=document.getElementById(id); if(el) io.observe(el); });
 }
 function initReveal(){
   const io = new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } }), {threshold:.12});
